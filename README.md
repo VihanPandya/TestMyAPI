@@ -7,6 +7,14 @@ leaving the page.
 
 Built with Next.js (App Router), TypeScript and Tailwind CSS.
 
+## Screenshots
+
+| Compose a request | Inspect the response |
+| :---: | :---: |
+| [![Composing a request: method selector, URL bar, and query params synced into an editable table](docs/screenshots/compose.png)](docs/screenshots/compose.png) | [![Inspecting a response: status, timing and size, response headers, and a pretty-printed JSON body, with request history in the sidebar](docs/screenshots/response.png)](docs/screenshots/response.png) |
+
+<sub>Regenerate with `npm run screenshots` (start the app with `ALLOW_PRIVATE_HOSTS=true` first — see [`scripts/screenshot.mjs`](scripts/screenshot.mjs)).</sub>
+
 ## Why a server-side proxy?
 
 A request inspector that runs purely in the browser can't call arbitrary APIs:
