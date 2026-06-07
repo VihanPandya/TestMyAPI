@@ -78,3 +78,10 @@ export interface HistoryEntry {
   createdAt: number;
   request: RequestState;
 }
+
+export interface SavedRequest {
+  id: string;
+  name: string;
+  createdAt: number;
+  request: RequestState;
+}

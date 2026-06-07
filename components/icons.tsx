@@ -88,7 +88,7 @@ export const ChevronDownIcon = (p: IconProps) => (
 
 /**
  * Brand mark: a pair of braces embracing a dot — a compact nod to JSON / an API
- * payload. Braces use the current text color; the dot uses the accent.
+ * payload. Monochrome: faint braces, solid dot.
  */
 export const LogoMark = (p: IconProps) => (
   <svg
@@ -102,6 +102,7 @@ export const LogoMark = (p: IconProps) => (
     <path
       d="M9.5 4C7.8 4 7.3 5 7.3 6.6c0 1.4.1 2.5-.5 3.2-.4.5-1 .9-1.6 1.1v.2c.6.2 1.2.6 1.6 1.1.6.7.5 1.8.5 3.2C7.3 19 7.8 20 9.5 20"
       stroke="currentColor"
+      strokeOpacity="0.55"
       strokeWidth="1.7"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -109,10 +110,51 @@ export const LogoMark = (p: IconProps) => (
     <path
       d="M14.5 4c1.7 0 2.2 1 2.2 2.6 0 1.4-.1 2.5.5 3.2.4.5 1 .9 1.6 1.1v.2c-.6.2-1.2.6-1.6 1.1-.6.7-.5 1.8-.5 3.2 0 1.6-.5 2.6-2.2 2.6"
       stroke="currentColor"
+      strokeOpacity="0.55"
       strokeWidth="1.7"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <circle cx="12" cy="12" r="1.7" fill="var(--color-accent)" />
+    <circle cx="12" cy="12" r="1.6" fill="currentColor" />
   </svg>
+);
+
+export const SearchIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="m21 21-4.3-4.3" />
+  </Icon>
+);
+
+export const CodeIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m16 18 6-6-6-6M8 6l-6 6 6 6" />
+  </Icon>
+);
+
+export const BookmarkIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+  </Icon>
+);
+
+export const ImportIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <path d="M7 10l5 5 5-5M12 15V3" />
+  </Icon>
+);
+
+export const ReturnIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 10 4 15l5 5" />
+    <path d="M20 4v7a4 4 0 0 1-4 4H4" />
+  </Icon>
+);
+
+export const SidebarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M9 4v16" />
+  </Icon>
 );

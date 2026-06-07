@@ -54,18 +54,11 @@ export function BodyEditor({ mode, body, onModeChange, onBodyChange }: Props) {
         {mode === "json" && (
           <div className="flex items-center gap-3">
             {validity !== "empty" && (
-              <span
-                className={`text-xs ${validity === "valid" ? "text-success" : "text-danger"}`}
-              >
+              <span className={`text-xs ${validity === "valid" ? "text-success" : "text-danger"}`}>
                 {validity === "valid" ? "Valid JSON" : "Invalid JSON"}
               </span>
             )}
-            <button
-              type="button"
-              onClick={format}
-              disabled={validity !== "valid"}
-              className="btn-ghost text-xs"
-            >
+            <button type="button" onClick={format} disabled={validity !== "valid"} className="btn-ghost text-xs">
               Format
             </button>
           </div>
@@ -73,7 +66,7 @@ export function BodyEditor({ mode, body, onModeChange, onBodyChange }: Props) {
       </div>
 
       {mode === "none" ? (
-        <div className="flex flex-1 items-center justify-center rounded-md border border-dashed border-border text-sm text-faint">
+        <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-line text-sm text-faint">
           This request has no body.
         </div>
       ) : (
@@ -82,7 +75,7 @@ export function BodyEditor({ mode, body, onModeChange, onBodyChange }: Props) {
           onChange={(e) => onBodyChange(e.target.value)}
           placeholder={mode === "json" ? '{\n  "key": "value"\n}' : "Request body"}
           spellCheck={false}
-          className="min-h-[180px] flex-1 resize-none rounded-lg border border-border bg-panel-2 p-3 font-mono text-[13px] leading-relaxed text-fg outline-none transition placeholder:text-faint focus:border-accent/70 focus:ring-2 focus:ring-accent/25"
+          className="min-h-[180px] flex-1 resize-none rounded-lg border border-line bg-bg p-3 font-mono text-[13px] leading-relaxed text-fg outline-none transition placeholder:text-faint focus-visible:border-line-strong focus-visible:ring-2 focus-visible:ring-white/10"
         />
       )}
     </div>

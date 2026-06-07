@@ -1,30 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  /* surfaces — deep, faintly cool neutral */
-  --color-bg: #0b0b0f;
-  --color-panel: #121218;
-  --color-panel-2: #17171f;
-  --color-panel-3: #1d1d27;
-  --color-border: #25252f;
-  --color-border-strong: #34343f;
+  /* monochrome surfaces — flat, near-black, separated by hairlines not boxes */
+  --color-bg: #09090a;
+  --color-elevated: #0e0e10;
+  --color-raised: #161618;
+  --color-overlay: #1b1b1e;
+  --color-line: #222225;
+  --color-line-strong: #34343a;
 
   /* text */
-  --color-fg: #ededf2;
-  --color-muted: #9a9aa6;
-  --color-faint: #61616d;
+  --color-fg: #f4f4f5;
+  --color-muted: #8b8b92;
+  --color-faint: #57575d;
 
-  /* accent — a restrained indigo, used sparingly */
-  --color-accent: #7c78ff;
-  --color-accent-bright: #948fff;
-  --color-accent-fg: #ffffff;
+  /* the primary action is a clean white surface, not a colored accent */
+  --color-primary: #fafafa;
+  --color-on-primary: #09090a;
 
-  /* method + status hues, tuned to sit apart from the accent */
-  --color-success: #43d18b;
-  --color-warning: #f2b840;
-  --color-info: #54b2ff;
-  --color-magenta: #e87fc9;
-  --color-danger: #fb6f6f;
+  /* the only color in the UI comes from HTTP methods + status */
+  --color-success: #54cf8e;
+  --color-warning: #e6b34d;
+  --color-info: #5aa6f0;
+  --color-magenta: #d588c4;
+  --color-danger: #ee6b6b;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
@@ -40,39 +39,27 @@
 
   body {
     background-color: var(--color-bg);
-    background-image: radial-gradient(
-      72% 52% at 50% -10%,
-      color-mix(in srgb, var(--color-accent) 13%, transparent) 0%,
-      transparent 62%
-    );
-    background-attachment: fixed;
     color: var(--color-fg);
-    font-feature-settings: "cv01", "cv03", "ss03";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent) 32%, transparent);
-    color: #fff;
-  }
-
-  :focus-visible {
-    outline: none;
+    background-color: color-mix(in srgb, var(--color-fg) 18%, transparent);
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-border-strong) transparent;
+    scrollbar-color: var(--color-line-strong) transparent;
   }
 
   *::-webkit-scrollbar {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: var(--color-border-strong);
+    background-color: var(--color-line-strong);
     border-radius: 9999px;
     border: 3px solid transparent;
     background-clip: padding-box;
@@ -84,44 +71,52 @@
 }
 
 @layer components {
-  /* lifted card with a hairline top highlight + soft ambient shadow */
-  .surface {
-    border-radius: 14px;
-    border: 1px solid var(--color-border);
-    background-color: var(--color-panel);
-    box-shadow:
-      inset 0 1px 0 0 color-mix(in srgb, white 5%, transparent),
-      0 1px 2px 0 rgb(0 0 0 / 0.3),
-      0 18px 44px -26px rgb(0 0 0 / 0.75);
+  .panel {
+    @apply rounded-xl border border-line bg-elevated;
   }
 
   .input-base {
-    @apply w-full rounded-lg border border-border bg-panel-2 px-3 py-2 text-sm text-fg
+    @apply w-full rounded-lg border border-line bg-raised px-3 py-2 text-sm text-fg
       outline-none transition placeholder:text-faint
-      focus:border-accent/70 focus:ring-2 focus:ring-accent/25;
+      focus-visible:border-line-strong focus-visible:ring-2 focus-visible:ring-white/10;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2
+      text-sm font-medium text-on-primary transition hover:brightness-95
+      disabled:pointer-events-none disabled:opacity-40;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line
+      bg-transparent px-3 py-2 text-sm text-muted transition hover:border-line-strong
+      hover:text-fg disabled:pointer-events-none disabled:opacity-40;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm
-      text-muted transition hover:bg-panel-3 hover:text-fg disabled:pointer-events-none
+      text-muted transition hover:bg-white/5 hover:text-fg disabled:pointer-events-none
       disabled:opacity-40;
   }
 
-  /* segmented control track + buttons */
   .seg {
-    @apply inline-flex rounded-lg border border-border bg-panel-2/60 p-0.5;
+    @apply inline-flex gap-0.5 rounded-lg bg-raised p-0.5;
   }
 
   .seg-btn {
-    @apply rounded-md px-3 py-1 text-xs font-medium text-muted transition hover:text-fg;
+    @apply rounded-md px-2.5 py-1 text-xs font-medium text-muted transition hover:text-fg;
   }
 
   .seg-btn[data-active="true"] {
-    @apply bg-panel-3 text-fg shadow-sm;
+    @apply bg-overlay text-fg;
   }
 
   .kbd {
-    @apply inline-flex items-center gap-0.5 rounded-md border border-border-strong
-      bg-panel-2 px-1.5 py-0.5 font-mono text-[11px] leading-none text-muted;
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded border border-line
+      bg-raised px-1 font-mono text-[11px] leading-none text-muted;
+  }
+
+  .menu {
+    @apply overflow-hidden rounded-xl border border-line bg-overlay shadow-[0_16px_50px_-12px_rgb(0_0_0/0.7)];
   }
 }

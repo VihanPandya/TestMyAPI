@@ -27,18 +27,18 @@ export function KeyValueEditor({
   };
 
   return (
-    <div className="divide-y divide-border overflow-hidden rounded-md border border-border">
+    <div className="divide-y divide-line">
       {rows.map((row) => {
         const isBlank = row.key === "" && row.value === "";
         return (
-          <div key={row.id} className="group flex items-center gap-2 bg-panel-2/40 px-2">
+          <div key={row.id} className="group flex items-center gap-2.5 py-0.5">
             <input
               type="checkbox"
               checked={row.enabled}
               onChange={(e) => update(row.id, { enabled: e.target.checked })}
               disabled={isBlank}
               aria-label="Enable row"
-              className="size-3.5 shrink-0 cursor-pointer accent-accent disabled:opacity-30"
+              className="size-3.5 shrink-0 cursor-pointer rounded accent-white disabled:opacity-25"
             />
             <input
               value={row.key}
@@ -46,7 +46,7 @@ export function KeyValueEditor({
               placeholder={keyPlaceholder}
               spellCheck={false}
               autoComplete="off"
-              className="min-w-0 flex-1 bg-transparent py-2 font-mono text-[13px] text-fg outline-none placeholder:text-faint"
+              className="min-w-0 flex-1 bg-transparent py-1.5 font-mono text-[13px] text-fg outline-none placeholder:text-faint"
             />
             <span className="text-faint">:</span>
             <input
@@ -55,7 +55,7 @@ export function KeyValueEditor({
               placeholder={valuePlaceholder}
               spellCheck={false}
               autoComplete="off"
-              className="min-w-0 flex-[1.4] bg-transparent py-2 font-mono text-[13px] text-fg outline-none placeholder:text-faint"
+              className="min-w-0 flex-[1.4] bg-transparent py-1.5 font-mono text-[13px] text-muted outline-none placeholder:text-faint"
             />
             <button
               type="button"
