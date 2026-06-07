@@ -1,25 +1,35 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0c11;
-  --color-panel: #11141b;
-  --color-panel-2: #161a23;
-  --color-border: #232936;
-  --color-border-strong: #313847;
-  --color-fg: #e7eaf0;
-  --color-muted: #8b93a7;
-  --color-faint: #5b6376;
-  --color-accent: #5b8cff;
-  --color-accent-fg: #ffffff;
-  --color-accent-soft: #1b2747;
-  --color-success: #34d399;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --color-info: #60a5fa;
-  --color-purple: #c084fc;
+  /* surfaces — deep, faintly cool neutral */
+  --color-bg: #0b0b0f;
+  --color-panel: #121218;
+  --color-panel-2: #17171f;
+  --color-panel-3: #1d1d27;
+  --color-border: #25252f;
+  --color-border-strong: #34343f;
 
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Fira Code", Menlo,
-    Consolas, monospace;
+  /* text */
+  --color-fg: #ededf2;
+  --color-muted: #9a9aa6;
+  --color-faint: #61616d;
+
+  /* accent — a restrained indigo, used sparingly */
+  --color-accent: #7c78ff;
+  --color-accent-bright: #948fff;
+  --color-accent-fg: #ffffff;
+
+  /* method + status hues, tuned to sit apart from the accent */
+  --color-success: #43d18b;
+  --color-warning: #f2b840;
+  --color-info: #54b2ff;
+  --color-magenta: #e87fc9;
+  --color-danger: #fb6f6f;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", "JetBrains Mono",
+    Menlo, Consolas, monospace;
 }
 
 @layer base {
@@ -30,13 +40,25 @@
 
   body {
     background-color: var(--color-bg);
+    background-image: radial-gradient(
+      72% 52% at 50% -10%,
+      color-mix(in srgb, var(--color-accent) 13%, transparent) 0%,
+      transparent 62%
+    );
+    background-attachment: fixed;
     color: var(--color-fg);
+    font-feature-settings: "cv01", "cv03", "ss03";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    background-color: color-mix(in srgb, var(--color-accent) 32%, transparent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: none;
   }
 
   * {
@@ -45,14 +67,14 @@
   }
 
   *::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
   }
 
   *::-webkit-scrollbar-thumb {
     background-color: var(--color-border-strong);
     border-radius: 9999px;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     background-clip: padding-box;
   }
 
@@ -62,14 +84,44 @@
 }
 
 @layer components {
+  /* lifted card with a hairline top highlight + soft ambient shadow */
+  .surface {
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-panel);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, white 5%, transparent),
+      0 1px 2px 0 rgb(0 0 0 / 0.3),
+      0 18px 44px -26px rgb(0 0 0 / 0.75);
+  }
+
   .input-base {
-    @apply w-full rounded-md border border-border bg-panel-2 px-3 py-2 text-sm text-fg
+    @apply w-full rounded-lg border border-border bg-panel-2 px-3 py-2 text-sm text-fg
       outline-none transition placeholder:text-faint
-      focus:border-accent focus:ring-1 focus:ring-accent;
+      focus:border-accent/70 focus:ring-2 focus:ring-accent/25;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm
-      text-muted transition hover:bg-panel-2 hover:text-fg disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm
+      text-muted transition hover:bg-panel-3 hover:text-fg disabled:pointer-events-none
+      disabled:opacity-40;
+  }
+
+  /* segmented control track + buttons */
+  .seg {
+    @apply inline-flex rounded-lg border border-border bg-panel-2/60 p-0.5;
+  }
+
+  .seg-btn {
+    @apply rounded-md px-3 py-1 text-xs font-medium text-muted transition hover:text-fg;
+  }
+
+  .seg-btn[data-active="true"] {
+    @apply bg-panel-3 text-fg shadow-sm;
+  }
+
+  .kbd {
+    @apply inline-flex items-center gap-0.5 rounded-md border border-border-strong
+      bg-panel-2 px-1.5 py-0.5 font-mono text-[11px] leading-none text-muted;
   }
 }

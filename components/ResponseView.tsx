@@ -10,7 +10,7 @@ import {
   type StatusKind,
 } from "@/lib/format";
 import type { ProxyResponse } from "@/lib/types";
-import { CheckIcon, CopyIcon, SpinnerIcon } from "./icons";
+import { CheckIcon, CopyIcon, LogoMark, SpinnerIcon } from "./icons";
 
 interface Props {
   response: ProxyResponse | null;
@@ -67,7 +67,12 @@ export function ResponseView({ response, error, loading }: Props) {
   if (!response) {
     return (
       <Centered>
-        <p className="text-sm text-faint">Send a request to see the response here.</p>
+        <LogoMark width={36} height={36} className="text-border-strong" />
+        <p className="mt-4 text-sm text-muted">Send a request to inspect the response.</p>
+        <p className="mt-1.5 flex items-center gap-1 text-xs text-faint">
+          Press <kbd className="kbd">⌘</kbd>
+          <kbd className="kbd">↵</kbd> to send
+        </p>
       </Centered>
     );
   }
@@ -95,7 +100,7 @@ export function ResponseView({ response, error, loading }: Props) {
         <Metric label="Time" value={formatDuration(response.timeMs)} />
         <Metric label="Size" value={formatBytes(response.size)} />
         {response.redirected && (
-          <span className="rounded bg-accent-soft px-1.5 py-0.5 text-xs text-info">redirect</span>
+          <span className="rounded bg-accent/15 px-1.5 py-0.5 text-xs text-accent">redirect</span>
         )}
         {response.truncated && (
           <span className="rounded bg-warning/10 px-1.5 py-0.5 text-xs text-warning">

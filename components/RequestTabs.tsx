@@ -58,11 +58,11 @@ export function RequestTabs({
           >
             {t.label}
             {t.badge != null && (
-              <span className="rounded-full bg-accent-soft px-1.5 text-[11px] text-info">
+              <span className="rounded-full bg-accent/15 px-1.5 text-[11px] font-medium text-accent">
                 {t.badge}
               </span>
             )}
-            {t.dot && <span className="size-1.5 rounded-full bg-accent" />}
+            {t.dot && <span className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_0_var(--color-accent)]" />}
             {tab === t.id && (
               <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-accent" />
             )}

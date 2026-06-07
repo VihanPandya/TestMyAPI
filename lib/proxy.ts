@@ -70,7 +70,7 @@ function buildHeaders(req: ProxyRequest): Headers {
     }
   }
   if (!headers.has("user-agent")) {
-    headers.set("user-agent", "TestMyAPI/1.0 (+https://github.com)");
+    headers.set("user-agent", "TestMyAPI/1.0");
   }
   return headers;
 }

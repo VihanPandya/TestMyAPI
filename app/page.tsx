@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { HistorySidebar } from "@/components/HistorySidebar";
-import { BoltIcon, CloseIcon, GitHubIcon, HistoryIcon } from "@/components/icons";
+import { CloseIcon, GitHubIcon, HistoryIcon, LogoMark } from "@/components/icons";
 import { RequestBar } from "@/components/RequestBar";
 import { RequestTabs } from "@/components/RequestTabs";
 import { ResponseView } from "@/components/ResponseView";
@@ -25,7 +25,7 @@ import type {
   RequestState,
 } from "@/lib/types";
 
-const REPO_URL = "https://github.com/vihanpandya/testmyapi";
+const REPO_URL = "https://github.com/VihanPandya/TestMyAPI";
 
 export default function Home() {
   const [request, setRequest] = useState<RequestState>(createRequestState);
@@ -137,21 +137,20 @@ export default function Home() {
 
   return (
     <div className="flex h-screen flex-col overflow-hidden">
-      <header className="flex shrink-0 items-center justify-between border-b border-border bg-panel px-4 py-2.5">
+      <header className="flex shrink-0 items-center justify-between border-b border-border/70 bg-bg/60 px-4 py-3 backdrop-blur-xl">
         <div className="flex items-center gap-2.5">
-          <span className="flex size-7 items-center justify-center rounded-md bg-accent-soft text-accent">
-            <BoltIcon width={16} height={16} />
-          </span>
-          <div className="leading-tight">
-            <h1 className="text-sm font-bold tracking-tight text-fg">TestMyAPI</h1>
-            <p className="hidden text-[11px] text-faint sm:block">API testing playground</p>
+          <LogoMark className="text-fg" />
+          <div className="flex items-baseline gap-2">
+            <h1 className="text-[15px] font-semibold tracking-tight text-fg">
+              TestMy<span className="text-accent">API</span>
+            </h1>
+            <span className="hidden font-mono text-[11px] text-faint sm:inline">
+              / request playground
+            </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <kbd className="hidden items-center gap-1 rounded border border-border bg-panel-2 px-2 py-1 text-[11px] text-muted md:inline-flex">
-            ⌘/Ctrl + Enter to send
-          </kbd>
+        <div className="flex items-center gap-1">
           <a
             href={REPO_URL}
             target="_blank"
@@ -188,7 +187,7 @@ export default function Home() {
           />
 
           <div className="grid min-h-0 flex-1 grid-rows-2 gap-4 lg:grid-cols-2 lg:grid-rows-1">
-            <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border bg-panel">
+            <section className="surface flex min-h-0 flex-col overflow-hidden">
               <RequestTabs
                 request={request}
                 onParamsChange={onParamsChange}
@@ -199,7 +198,7 @@ export default function Home() {
               />
             </section>
 
-            <section className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border bg-panel">
+            <section className="surface flex min-h-0 flex-col overflow-hidden">
               <ResponseView response={response} error={error} loading={loading} />
             </section>
           </div>
