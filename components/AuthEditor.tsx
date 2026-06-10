@@ -18,15 +18,14 @@ export function AuthEditor({ auth, onChange }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="inline-flex w-fit rounded-md border border-border p-0.5">
+      <div className="seg w-fit">
         {MODES.map((m) => (
           <button
             key={m.value}
             type="button"
+            data-active={auth.mode === m.value}
             onClick={() => set({ mode: m.value })}
-            className={`rounded px-3 py-1 text-xs font-medium transition ${
-              auth.mode === m.value ? "bg-accent-soft text-fg" : "text-muted hover:text-fg"
-            }`}
+            className="seg-btn"
           >
             {m.label}
           </button>

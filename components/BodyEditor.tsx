@@ -37,15 +37,14 @@ export function BodyEditor({ mode, body, onModeChange, onBodyChange }: Props) {
   return (
     <div className="flex h-full flex-col gap-3">
       <div className="flex items-center justify-between">
-        <div className="inline-flex rounded-md border border-border p-0.5">
+        <div className="seg">
           {MODES.map((m) => (
             <button
               key={m.value}
               type="button"
+              data-active={mode === m.value}
               onClick={() => onModeChange(m.value)}
-              className={`rounded px-3 py-1 text-xs font-medium transition ${
-                mode === m.value ? "bg-accent-soft text-fg" : "text-muted hover:text-fg"
-              }`}
+              className="seg-btn"
             >
               {m.label}
             </button>
@@ -83,7 +82,7 @@ export function BodyEditor({ mode, body, onModeChange, onBodyChange }: Props) {
           onChange={(e) => onBodyChange(e.target.value)}
           placeholder={mode === "json" ? '{\n  "key": "value"\n}' : "Request body"}
           spellCheck={false}
-          className="min-h-[180px] flex-1 resize-none rounded-md border border-border bg-panel-2 p-3 font-mono text-[13px] leading-relaxed text-fg outline-none transition placeholder:text-faint focus:border-accent focus:ring-1 focus:ring-accent"
+          className="min-h-[180px] flex-1 resize-none rounded-lg border border-border bg-panel-2 p-3 font-mono text-[13px] leading-relaxed text-fg outline-none transition placeholder:text-faint focus:border-accent/70 focus:ring-2 focus:ring-accent/25"
         />
       )}
     </div>

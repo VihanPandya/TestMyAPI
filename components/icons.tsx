@@ -80,8 +80,39 @@ export const GitHubIcon = (p: IconProps) => (
   </Icon>
 );
 
-export const BoltIcon = (p: IconProps) => (
+export const ChevronDownIcon = (p: IconProps) => (
   <Icon {...p}>
-    <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+    <path d="m6 9 6 6 6-6" />
   </Icon>
+);
+
+/**
+ * Brand mark: a pair of braces embracing a dot — a compact nod to JSON / an API
+ * payload. Braces use the current text color; the dot uses the accent.
+ */
+export const LogoMark = (p: IconProps) => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    {...p}
+  >
+    <path
+      d="M9.5 4C7.8 4 7.3 5 7.3 6.6c0 1.4.1 2.5-.5 3.2-.4.5-1 .9-1.6 1.1v.2c.6.2 1.2.6 1.6 1.1.6.7.5 1.8.5 3.2C7.3 19 7.8 20 9.5 20"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M14.5 4c1.7 0 2.2 1 2.2 2.6 0 1.4-.1 2.5.5 3.2.4.5 1 .9 1.6 1.1v.2c-.6.2-1.2.6-1.6 1.1-.6.7-.5 1.8-.5 3.2 0 1.6-.5 2.6-2.2 2.6"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <circle cx="12" cy="12" r="1.7" fill="var(--color-accent)" />
+  </svg>
 );

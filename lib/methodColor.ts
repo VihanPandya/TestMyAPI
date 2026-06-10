@@ -10,7 +10,7 @@ export function methodColor(method: HttpMethod): string {
     case "PUT":
       return "text-info";
     case "PATCH":
-      return "text-purple";
+      return "text-magenta";
     case "DELETE":
       return "text-danger";
     default:
