@@ -11,7 +11,11 @@ Built with Next.js (App Router), TypeScript and Tailwind CSS.
 
 | Compose a request | Inspect the response |
 | :---: | :---: |
-| [![Composing a request: method selector, URL bar, and query params synced into an editable table](docs/screenshots/compose.png)](docs/screenshots/compose.png) | [![Inspecting a response: status, timing and size, response headers, and a pretty-printed JSON body, with request history in the sidebar](docs/screenshots/response.png)](docs/screenshots/response.png) |
+| [![Composing a request: method selector, URL bar, and query params synced into an editable table, with a saved-request Collection in the sidebar](docs/screenshots/compose.png)](docs/screenshots/compose.png) | [![Inspecting a response: status, timing and size, response headers, and a pretty-printed JSON body](docs/screenshots/response.png)](docs/screenshots/response.png) |
+
+<p align="center">
+  <a href="docs/screenshots/palette.png"><img src="docs/screenshots/palette.png" width="640" alt="The ⌘K command palette listing Send, Save, Focus URL, Import from cURL, View code and Copy as cURL actions" /></a>
+</p>
 
 <sub>Regenerate with `npm run screenshots` (start the app with `ALLOW_PRIVATE_HOSTS=true` first — see [`scripts/screenshot.mjs`](scripts/screenshot.mjs)).</sub>
 
@@ -40,12 +44,23 @@ deliberately conservative:
 
 - Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS.
 - Query params editor that stays in sync with the URL bar.
-- Custom request headers.
-- Auth helpers: Bearer token and Basic auth.
+- Custom request headers and auth helpers (Bearer token, Basic auth).
 - JSON / text body with a one-click formatter and live JSON validation.
 - Response viewer with pretty/raw toggle, header list, status, time and size.
-- Request history (stored locally in your browser) — click to reload a request.
-- `⌘/Ctrl + Enter` to send.
+- **Command palette (`⌘K`)** for every action, with keyboard-first shortcuts.
+- **Import from cURL** — paste a `curl` command to populate the request.
+- **Copy as cURL or `fetch`** — generate a runnable snippet of the request.
+- **Collection** of saved requests plus a recent **History**, stored locally
+  in your browser — click any entry to reload it.
+
+### Keyboard shortcuts
+
+| Shortcut       | Action                  |
+| -------------- | ----------------------- |
+| `⌘/Ctrl + K`   | Open the command palette |
+| `⌘/Ctrl + ↵`   | Send the request        |
+| `⌘/Ctrl + S`   | Save the request        |
+| `⌘/Ctrl + L`   | Focus the URL bar       |
 
 ## Getting started
 
@@ -94,13 +109,17 @@ fully static export won't work.
 app/
   api/proxy/route.ts   # request validation + the proxy endpoint
   layout.tsx, page.tsx # shell and main playground UI
-components/             # request bar, tabs, editors, response view, history
+components/             # request bar, tabs, editors, response view,
+                        # sidebar, command palette and modals
 lib/
   proxy.ts             # the forwarding engine (fetch, timeout, size cap)
   ssrf.ts              # URL validation + private-address detection
   request.ts           # request-state model and URL/param helpers
+  curl.ts              # parse a curl command into a request
+  codegen.ts           # render a request as curl / fetch
   format.ts            # byte/duration/status/JSON formatting
-  storage.ts           # local history persistence
+  storage.ts           # local history + saved-request persistence
+scripts/screenshot.mjs # regenerates the README screenshots
 ```
 
 ## License

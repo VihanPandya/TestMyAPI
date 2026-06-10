@@ -54,7 +54,7 @@ function startEchoServer() {
     receipt_url: "https://pay.example.com/receipts/ch_3PqL2aX9",
   };
   return new Promise((resolve) => {
-    const server = createServer((req, res) => {
+    const server = createServer((_req, res) => {
       res.writeHead(200, {
         "content-type": "application/json",
         "x-request-id": "req_8Fq2Lm",
@@ -64,6 +64,34 @@ function startEchoServer() {
     });
     server.listen(ECHO_PORT, "127.0.0.1", () => resolve(server));
   });
+}
+
+// Pre-seed the browser so the Collection and History rails look alive.
+function seedScript() {
+  const req = (method, url) => ({
+    method,
+    url,
+    params: [],
+    headers: [{ id: "h", key: "", value: "", enabled: true }],
+    bodyMode: "none",
+    body: "",
+    auth: { mode: "none", token: "", username: "", password: "" },
+  });
+  const saved = [
+    { id: "s1", name: "List user repos", createdAt: Date.now(), request: req("GET", "https://api.github.com/users/octocat/repos?per_page=20") },
+    { id: "s2", name: "Create charge", createdAt: Date.now(), request: req("POST", "https://api.stripe.com/v1/charges") },
+    { id: "s3", name: "Current forecast", createdAt: Date.now(), request: req("GET", "https://api.open-meteo.com/v1/forecast?latitude=37.77") },
+  ];
+  const now = Date.now();
+  const history = [
+    { id: "h1", method: "GET", url: "https://api.github.com/users/octocat", status: 200, timeMs: 142, createdAt: now - 60000, request: req("GET", "https://api.github.com/users/octocat") },
+    { id: "h2", method: "POST", url: "https://api.stripe.com/v1/charges", status: 402, timeMs: 311, createdAt: now - 240000, request: req("POST", "https://api.stripe.com/v1/charges") },
+    { id: "h3", method: "GET", url: "https://api.open-meteo.com/v1/forecast", status: 200, timeMs: 88, createdAt: now - 900000, request: req("GET", "https://api.open-meteo.com/v1/forecast") },
+  ];
+  return `
+    localStorage.setItem('testmyapi.saved.v1', '${JSON.stringify(saved)}');
+    localStorage.setItem('testmyapi.history.v1', '${JSON.stringify(history)}');
+  `;
 }
 
 async function settle(page) {
@@ -82,16 +110,17 @@ async function main() {
 
   try {
     const page = await browser.newPage({
-      viewport: { width: 1280, height: 800 },
+      viewport: { width: 1320, height: 820 },
       deviceScaleFactor: 2,
       colorScheme: "dark",
     });
+    await page.addInitScript(seedScript());
 
     const requestPanel = page.locator("section").first();
     const responsePanel = page.locator("section").nth(1);
     const url = page.getByLabel("Request URL");
 
-    // 1) Request composer — URL with query params synced into the Params table.
+    // 1) Request composer — query params synced from the URL, Collection populated.
     await page.goto(BASE_URL, { waitUntil: "domcontentloaded" });
     await url.fill("https://api.github.com/repos/VihanPandya/TestMyAPI/commits?per_page=10&sha=main");
     await url.blur();
@@ -110,6 +139,12 @@ async function main() {
     await responsePanel.getByText(/\b200\b/).first().waitFor({ timeout: 15000 });
     await page.waitForTimeout(300);
     await page.screenshot({ path: join(OUT_DIR, "response.png") });
+
+    // 3) The command palette.
+    await page.getByRole("button", { name: "Open command palette" }).click();
+    await page.getByPlaceholder("Type a command…").waitFor();
+    await page.waitForTimeout(250);
+    await page.screenshot({ path: join(OUT_DIR, "palette.png") });
 
     console.log(`Saved screenshots to ${OUT_DIR}/`);
   } finally {

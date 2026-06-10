@@ -8,6 +8,7 @@ import { KeyValueEditor } from "./KeyValueEditor";
 
 interface Props {
   request: RequestState;
+  actions?: React.ReactNode;
   onParamsChange: (rows: KeyValue[]) => void;
   onHeadersChange: (rows: KeyValue[]) => void;
   onAuthChange: (auth: AuthState) => void;
@@ -23,6 +24,7 @@ function activeCount(rows: KeyValue[]): number {
 
 export function RequestTabs({
   request,
+  actions,
   onParamsChange,
   onHeadersChange,
   onAuthChange,
@@ -45,29 +47,26 @@ export function RequestTabs({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <div role="tablist" className="flex items-center gap-1 border-b border-border px-1">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
-            className={`relative flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition ${
-              tab === t.id ? "text-fg" : "text-muted hover:text-fg"
-            }`}
-          >
-            {t.label}
-            {t.badge != null && (
-              <span className="rounded-full bg-accent/15 px-1.5 text-[11px] font-medium text-accent">
-                {t.badge}
-              </span>
-            )}
-            {t.dot && <span className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_0_var(--color-accent)]" />}
-            {tab === t.id && (
-              <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-accent" />
-            )}
-          </button>
-        ))}
+      <div className="flex items-center justify-between border-b border-line pl-3 pr-2">
+        <div role="tablist" className="flex items-center gap-4">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              role="tab"
+              aria-selected={tab === t.id}
+              onClick={() => setTab(t.id)}
+              className={`relative flex items-center gap-1.5 py-3 text-[13px] font-medium transition ${
+                tab === t.id ? "text-fg" : "text-faint hover:text-muted"
+              }`}
+            >
+              {t.label}
+              {t.badge != null && <span className="text-[11px] text-faint">{t.badge}</span>}
+              {t.dot && <span className="size-1.5 rounded-full bg-fg" />}
+              {tab === t.id && <span className="absolute inset-x-0 -bottom-px h-px bg-fg" />}
+            </button>
+          ))}
+        </div>
+        {actions && <div className="flex items-center gap-0.5">{actions}</div>}
       </div>
 
       <div className="min-h-0 flex-1 overflow-auto p-4">
